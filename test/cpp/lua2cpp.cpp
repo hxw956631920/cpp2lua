@@ -173,3 +173,12 @@ void test_cppModuleFunction(lua_State *L)
         lua_pop(L, 1);
     }
 }
+
+// 测试cpp类
+void test_cppClass(lua_State *L)
+{
+    // 基础lua库
+    luaL_openlibs(L);
+    // 基础类注册
+    lua_baseClass_open(L);
+}

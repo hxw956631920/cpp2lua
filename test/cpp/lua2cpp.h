@@ -14,13 +14,8 @@
  * 7.
  * **/
 
-extern "C"
-{
-    // lua标准库
-    #include "lua.h"
-    #include "lualib.h"
-    #include "lauxlib.h"
-}
+// 引入lua标准头文件库
+#include "lua_ref_binding.h"
 
 #include <iostream>
 using namespace std;
@@ -62,5 +57,8 @@ static const luaL_Reg lua_reg_libs[] = {
 
 // 测试采用模块包装函数
 void test_cppModuleFunction(lua_State *L);
+
+// 测试cpp类
+void test_cppClass(lua_State *L);
 
 #endif
