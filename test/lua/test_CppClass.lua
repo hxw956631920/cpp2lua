@@ -2,10 +2,10 @@
 
 local refObj = Ref.create()
 
-Ref.retain(refObj)
+refObj:retain()
 
-print(Ref.getRefCount(refObj))
+print(refObj:getRefCount())
 
-Ref.release(refObj)
+refObj:release()
 
-print(Ref.getRefCount(refObj))
+print(refObj:getRefCount())

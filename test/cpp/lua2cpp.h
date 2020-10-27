@@ -15,7 +15,7 @@
  * **/
 
 // 引入lua标准头文件库
-#include "lua_ref_binding.h"
+#include "lua_ref_binding_module.h"
 
 #include <iostream>
 using namespace std;

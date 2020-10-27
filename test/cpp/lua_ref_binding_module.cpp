@@ -1,9 +1,9 @@
 
 
-#include "lua_ref_binding.h"
+#include "lua_ref_binding_module.h"
 
 // 创建ref对象
-int lua_ref_create(lua_State *L)
+int lua_ref_create_module(lua_State *L)
 {
     Ref **obj = (Ref **)lua_newuserdata(L, sizeof(Ref *));
     *obj = new Ref();
@@ -11,7 +11,7 @@ int lua_ref_create(lua_State *L)
 }
 
 // 
-int lua_ref_retain(lua_State *L)
+int lua_ref_retain_module(lua_State *L)
 {
     // 从栈底返回对象
     Ref **obj = (Ref **)lua_touserdata(L, 1);
@@ -29,7 +29,7 @@ int lua_ref_retain(lua_State *L)
     }
 }
 
-int lua_ref_release(lua_State *L)
+int lua_ref_release_module(lua_State *L)
 {
     // 从栈底返回对象
     Ref **obj = (Ref **)lua_touserdata(L, 1);
@@ -47,7 +47,7 @@ int lua_ref_release(lua_State *L)
     }
 }
 
-int lua_ref_getRefCount(lua_State *L)
+int lua_ref_getRefCount_module(lua_State *L)
 {
     // 从栈底返回对象
     Ref **obj = (Ref **)lua_touserdata(L, 1);
