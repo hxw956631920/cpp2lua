@@ -14,8 +14,9 @@
  * 7.
  * **/
 
-// 引入lua标准头文件库
+
 #include "lua_ref_binding_module.h"
+#include "lua_ref_binding_oop.h"
 
 #include <iostream>
 using namespace std;
@@ -58,7 +59,10 @@ static const luaL_Reg lua_reg_libs[] = {
 // 测试采用模块包装函数
 void test_cppModuleFunction(lua_State *L);
 
-// 测试cpp类
-void test_cppClass(lua_State *L);
+// 测试cpp类注册为模块形式
+void test_cppClassModule(lua_State *L);
+
+// 测试cpp类以面向对象形式注册
+void test_cppClassOOP(lua_State *L);
 
 #endif

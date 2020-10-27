@@ -21,7 +21,7 @@ int lua_ref_release_module(lua_State *L);
 int lua_ref_getRefCount_module(lua_State *L);
 
 // 测试Cpp类
-static const luaL_Reg lua_ref_libs[] = {
+static const luaL_Reg lua_ref_libs_module[] = {
     {"create", lua_ref_create_module},
     {"retain", lua_ref_retain_module},
     {"release", lua_ref_release_module},
@@ -29,13 +29,13 @@ static const luaL_Reg lua_ref_libs[] = {
     {NULL, NULL}
 };
 
-int lua_ref_register(lua_State *L);
+int lua_ref_register_module(lua_State *L);
 
-static const luaL_Reg lua_baseClass_libs[] = {
-    {"Ref", lua_ref_register},
+static const luaL_Reg lua_baseClass_libs_module[] = {
+    {"Ref", lua_ref_register_module},
     {NULL, NULL}
 };
 
-int lua_baseClass_open(lua_State *L);
+int lua_baseClass_open_module(lua_State *L);
 
 #endif

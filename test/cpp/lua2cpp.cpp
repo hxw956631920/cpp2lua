@@ -174,11 +174,21 @@ void test_cppModuleFunction(lua_State *L)
     }
 }
 
-// 测试cpp类
-void test_cppClass(lua_State *L)
+// 测试cpp类注册为模块形式
+void test_cppClassModule(lua_State *L)
 {
     // 基础lua库
     luaL_openlibs(L);
     // 基础类注册
-    lua_baseClass_open(L);
+    lua_baseClass_open_module(L);
 }
+
+// 测试cpp类以面向对象形式注册
+void test_cppClassOOP(lua_State *L)
+{
+    // 基础lua库
+    luaL_openlibs(L);
+    // 基础类注册
+    lua_baseClass_open_oop(L);
+}
+

@@ -1,5 +1,5 @@
 
-OBJ = lua_test_c.o lua2cpp.o test_example.o Ref.o lua_ref_binding_module.o
+OBJ = lua_test_c.o lua2cpp.o test_example.o Ref.o lua_ref_binding_module.o lua_ref_binding_oop.o
 LIB = liblua.a
 
 
@@ -17,6 +17,9 @@ lua2cpp.o:lua2cpp.cpp lua2cpp.h
 
 lua_ref_binding_module.o:lua_ref_binding_module.cpp lua_ref_binding_module.h Ref.h luastd.h
 	g++ -c -g lua_ref_binding_module.cpp
+
+lua_ref_binding_oop.o:lua_ref_binding_oop.cpp lua_ref_binding_oop.h Ref.h luastd.h
+	g++ -c -g lua_ref_binding_oop.cpp
 
 Ref.o:Ref.cpp Ref.h
 	g++ -c -g Ref.cpp

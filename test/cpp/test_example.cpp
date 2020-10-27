@@ -9,7 +9,8 @@ ExampleStruct test_example[MAX_TEST_NUMBER] = {
     {test_cppFunction, (char *)"../lua/test_CppFunction.lua", CPP2LUA},
     {test_cppVarriable, (char *)"../lua/test_CppVarriable.lua", CPP2LUA},
     {test_cppModuleFunction, (char *)"../lua/test_CppModuleFunction.lua", CPP2LUA},
-    {test_cppClass, (char *)"../lua/test_CppClass.lua", CPP2LUA},
+    {test_cppClassModule, (char *)"../lua/test_CppClassModule.lua", CPP2LUA},
+    {test_cppClassOOP, (char *)"../lua/test_CppClassOOP.lua", CPP2LUA},
     {NULL, NULL}
 };
 
