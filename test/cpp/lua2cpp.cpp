@@ -64,6 +64,7 @@ void test_varriable(lua_State *L)
 void test_function(lua_State *L)
 {
     int ret;
+    // 调用lua中定义的全局函数
     lua_getglobal(L, "add");
     lua_pushnumber(L, 10);
     lua_pushnumber(L, 20);
@@ -76,6 +77,33 @@ void test_function(lua_State *L)
     {
         cout << "result is " << lua_tonumber(L, -1) << endl;
     }
+    
+    // 调用某个表中的函数
+    lua_getglobal(L, "Person");
+    lua_getfield(L, -1, "getName");
+    //c++通过栈调用某个表的函数可以认为是.调用，因为需要把对象传进去，因此这里将Person作为副本压入栈中，作为第一个参数
+    lua_pushvalue(L, -2);
+    ret = lua_pcall(L, 1, 1, 0);
+    if (lua_isstring(L, -1))
+    {
+        std::cout << lua_tostring(L, -1) << endl;
+    }
+    
+    // 将栈顶的Xiaomi移除
+    lua_remove(L, -1);
+    // 查找setName函数放置于栈顶
+    lua_getfield(L, -1, "setName");
+    // 将Person拷贝一份放置于栈顶
+    lua_pushvalue(L, -2);
+    // 压入要设置的新名字
+    lua_pushstring(L, "baldwey");
+    // 调用函数
+    ret = lua_pcall(L, 2, 0, 0);
+    // 获取print函数
+    lua_getfield(L, -1, "print");
+    lua_pushvalue(L, -2);
+    // 执行print
+    ret = lua_pcall(L, 1, 0, 0);
 }
 
 // 测试lua中的require
