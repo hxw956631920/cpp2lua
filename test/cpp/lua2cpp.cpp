@@ -175,10 +175,16 @@ void test_cppVarriable(lua_State *L)
     lua_setglobal(L, "professional");
     lua_pushboolean(L, 1);
     lua_setglobal(L, "isGay");
-    // 表
-    // 创建空表
+    // 表 创建方法一
+    // 创建空表 并将该表压如栈顶
     lua_newtable(L);
+    // lua_newtable 等价于 如下
+    // lua_createtable(lua_State *L, int narr, int nrec);
+    // 预分配narr个array元素的空间和nrec个非array元素的空间
+    // lua_createtable(L, 0, 0);
+    // 压入value值
     lua_pushstring(L, "小米");
+    // 对于栈中-2的值找到其key为name，将对应的value设置为栈顶的值 也就是"小米"
     lua_setfield(L, -2, "name");
     lua_pushnumber(L, 26);
     lua_setfield(L, -2, "age");
@@ -186,7 +192,30 @@ void test_cppVarriable(lua_State *L)
     lua_setfield(L, -2, "professional");
     lua_pushboolean(L, 1);
     lua_setfield(L, -2, "isGay");
-    lua_setglobal(L, "person");
+    // 给位于栈顶的值取一个名字 由于现在位于栈顶的是表 因此给表取名为person
+    lua_setglobal(L, "miShen");
+
+    // 表 创建方法二
+    lua_createtable(L, 0, 0);
+    // key值入栈
+    lua_pushnumber(L, 1);
+    // value值入栈
+    lua_pushnumber(L, 25);
+    lua_settable(L, -3);
+    // 将miShen作为key
+    lua_getglobal(L, "miShen");
+    lua_pushboolean(L, 1);
+    lua_settable(L, -3);
+    // 给表取名
+    lua_setglobal(L, "Person");
+
+    // 表 创建方法三
+    lua_createtable(L, 0, 0);
+    lua_pushstring(L, "terran");
+    // 将miShen作为value
+    lua_getglobal(L, "miShen");
+    lua_rawset(L, -3);
+    lua_setglobal(L, "Race");
 }
 
 // 测试lua调用cpp的函数
