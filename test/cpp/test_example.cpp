@@ -22,6 +22,7 @@ int getExample(char *fileName, ExampleStruct *example)
         {
             strcpy(example->testFile, test_example[i].testFile);
             example->handler = test_example[i].handler;
+            example->type = test_example[i].type;
             return 0;
         }
     }
