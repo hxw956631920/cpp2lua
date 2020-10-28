@@ -1,7 +1,7 @@
 
 #include "lua2cpp.h"
 
-// 测试lua中的变量
+// 测试lua中的基本数据类型
 void test_varriable(lua_State *L)
 {
     // 字符串
@@ -22,14 +22,42 @@ void test_varriable(lua_State *L)
     {
         std::cout << lua_toboolean(L, -1) << endl;   
     }
-    // 表
+    // 表 写法1
+    // 将表person放置到栈顶
+    lua_getglobal(L, "person");
+    // 压入age 此时 age在栈顶 索引为-1 person 索引为-2
+    lua_pushstring(L, "age");
+    // 以栈顶为key(也就是age)对位于栈-2位置的表中查找该key对应的value 然后将key出栈
+    // 对应的value进栈 此时 26(age对应的值)在栈顶 person的索引为-2
+    lua_gettable(L, -2);
+    if (lua_isinteger(L, -1))
+    {
+        std::cout << "age:" << lua_tointeger(L, -1) << endl;   
+    }
+    // 将name压入栈 此时栈数据顺序为  -1:name -2:26 -3:person
+    lua_pushstring(L, "name");
+    lua_gettable(L, -3);
+    if (lua_isstring(L, -1))
+    {
+        std::cout << "name:" << lua_tostring(L, -1) << endl;   
+    }
+    lua_pushstring(L, "isGay");
+    lua_gettable(L, -4);
+    if (lua_isboolean(L, -1))
+    {
+        std::cout << "isGay:" << lua_toboolean(L, -1) << endl;   
+    }
+
+    // 表 写法2
     // lua_getglobal(L, "person");
-    // lua_pushstring(L, "age");
-    // lua_gettable(L, -2);
-    // if (lua_isinteger(L, -1))
-    // {
-    //     std::cout << lua_tointeger(L, -1) << endl;   
-    // }
+    // 函数原型 lua_getfield(lua_State *L, int index, const char *k);
+    // 将index处的值以k为索引查找对应的value(如果index处的不是表就会报错)并压入栈顶
+    // 将位于-4处的person以age为k进行查找对应的value压入栈顶
+    lua_getfield(L, -4, "age");
+    if (lua_isinteger(L, -1))
+    {
+        std::cout << "age:" << lua_tointeger(L, -1) << endl;  
+    }
 }
 
 // 测试cpp调用lua中的function
