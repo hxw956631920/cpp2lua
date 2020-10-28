@@ -22,6 +22,14 @@ void test_varriable(lua_State *L)
     {
         std::cout << lua_toboolean(L, -1) << endl;   
     }
+    // 表
+    // lua_getglobal(L, "person");
+    // lua_pushstring(L, "age");
+    // lua_gettable(L, -2);
+    // if (lua_isinteger(L, -1))
+    // {
+    //     std::cout << lua_tointeger(L, -1) << endl;   
+    // }
 }
 
 // 测试cpp调用lua中的function
