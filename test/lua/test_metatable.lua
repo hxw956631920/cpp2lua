@@ -79,3 +79,26 @@ print(set+set1)
 print(set*set1)
 print(set..set1)
 
+-- 米神
+miShen = {}
+-- Person 是 miShen的元方法
+Person = {
+    name = "小米",
+    age  = 25,
+    isGay = true
+}
+function Person.getName(t)
+    if t.name then
+        return t.name
+    end
+end
+Person.__index = function (t, key)
+    return Person[key]
+end
+setmetatable(miShen, Person)
+-- 打印结果发现即使miShen并没有name这个字段 但是会调用元表的方法
+print(miShen.name)
+print(miShen:getName())
+
+
+
