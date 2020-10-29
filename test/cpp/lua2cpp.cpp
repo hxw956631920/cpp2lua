@@ -163,6 +163,42 @@ void test_require(lua_State *L)
     }
 }
 
+// 测试lua中的元表
+void test_metatable(lua_State *L)
+{
+    // 获取表-miShen
+    lua_getglobal(L, "miShen");
+    // 改一下miShen的名字
+    lua_pushstring(L, "米神");
+    lua_setfield(L, -2, "name");
+    // 获取miShen的元表 
+    lua_getmetatable(L, -1);//-3
+    lua_getfield(L, -1, "name");
+    if (lua_isstring(L, -1))
+    {
+        std::cout << "miShen's metatable's name:" << lua_tostring(L, -1) << endl;//-2
+    }
+    // 更改Person的默认名字
+    lua_pushstring(L, "baldwey");
+    lua_setfield(L, -3, "name");
+    // 调用person的getName函数 但是传的对象是miShen
+    lua_getfield(L, -2, "getName");
+    lua_pushvalue(L, -4);
+    int ret = lua_pcall(L, 1, 1, 0);
+    if (lua_isstring(L, -1))
+    {
+        std::cout << "miShen's getName(miShen):" << lua_tostring(L, -1) << endl;//-1
+    }
+
+    lua_getfield(L, -3, "getName");
+    lua_pushvalue(L, -4);
+    ret = lua_pcall(L, 1, 1, 0);
+    if (lua_isstring(L, -1))
+    {
+        std::cout << "miShen's getName(Person):" << lua_tostring(L, -1) << endl;
+    }
+}
+
 // 测试lua调用cpp的变量
 void test_cppVarriable(lua_State *L)
 {

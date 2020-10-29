@@ -11,6 +11,7 @@ ExampleStruct test_example[MAX_TEST_NUMBER] = {
     {test_cppModuleFunction, (char *)"../lua/test_CppModuleFunction.lua", CPP2LUA},
     {test_cppClassModule, (char *)"../lua/test_CppClassModule.lua", CPP2LUA},
     {test_cppClassOOP, (char *)"../lua/test_CppClassOOP.lua", CPP2LUA},
+    {test_metatable, (char *)"../lua/test_metatable.lua", LUA2CPP},
     {NULL, NULL}
 };
 

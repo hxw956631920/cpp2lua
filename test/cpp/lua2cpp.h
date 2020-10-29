@@ -30,6 +30,9 @@ void test_function(lua_State *L);
 // 测试lua中的require
 void test_require(lua_State *L);
 
+// 测试lua中的元表
+void test_metatable(lua_State *L);
+
 // 测试lua调用cpp的变量
 void test_cppVarriable(lua_State *L);
 
