@@ -1,5 +1,6 @@
 
-OBJ = lua_test_c.o lua2cpp.o test_example.o Ref.o lua_ref_binding_module.o lua_ref_binding_oop.o
+OBJ = lua_test_c.o lua2cpp.o test_example.o Ref.o lua_ref_binding_module.o lua_ref_binding_oop.o \
+tmcolor.o
 LIB = liblua.a
 
 
@@ -23,6 +24,9 @@ lua_ref_binding_oop.o:lua_ref_binding_oop.cpp lua_ref_binding_oop.h Ref.h luastd
 
 Ref.o:Ref.cpp Ref.h
 	g++ -c -g Ref.cpp
+
+tmcolor.o:tmcolor.cpp tmcolor.h
+	g++ -c -g tmcolor.cpp -std=c++11
 
 clean:
 	rm -f *.o
