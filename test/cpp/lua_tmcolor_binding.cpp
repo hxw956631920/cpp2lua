@@ -35,6 +35,20 @@ int lua_tmcolor_setFontThickness(lua_State *L)
             return 1;
         }
     }
+    else if (argc == 1)
+    {
+        string str;
+        string result;
+        bool ok = lua_isstring(L, 1);
+        if (ok)
+        {
+            str = lua_tostring(L, 1);
+            result = setFontThickness(str);
+            lua_pushlstring(L, result.c_str(), (size_t)result.length());
+            return 1;
+        }
+    }
+    
     return 0;
 }
 
@@ -63,6 +77,19 @@ int lua_tmcolor_setFontColor(lua_State *L)
             return 1;
         }
     }
+    else if (argc == 1)
+    {
+        string str;
+        string result;
+        bool ok = lua_isstring(L, 1);
+        if (ok)
+        {
+            str = lua_tostring(L, 1);
+            result = setFontColor(str);
+            lua_pushlstring(L, result.c_str(), (size_t)result.length());
+            return 1;
+        }
+    }
     return 0;
 }
 
@@ -87,6 +114,19 @@ int lua_tmcolor_setBgColor(lua_State *L)
         if (ok)
         {
             result = setBgColor(str, flag);
+            lua_pushlstring(L, result.c_str(), (size_t)result.length());
+            return 1;
+        }
+    }
+    else if (argc == 1)
+    {
+        string str;
+        string result;
+        bool ok = lua_isstring(L, 1);
+        if (ok)
+        {
+            str = lua_tostring(L, 1);
+            result = setBgColor(str);
             lua_pushlstring(L, result.c_str(), (size_t)result.length());
             return 1;
         }

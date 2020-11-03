@@ -179,8 +179,7 @@ void test_metatable(lua_State *L)
     lua_getfield(L, -1, "name");
     if (lua_isstring(L, -1))
     {
-        content = setFontColor("miShen's metatable's name:", FC_BROWN);
-        std::cout << content << lua_tostring(L, -1) << endl;//-2
+        std::cout << "miShen's metatable's name:" << lua_tostring(L, -1) << endl;//-2
     }
 
     // 更改Person的默认名字
@@ -195,8 +194,7 @@ void test_metatable(lua_State *L)
     int ret = lua_pcall(L, 1, 1, 0);
     if (lua_isstring(L, -1))
     {
-        content = setFontColor("miShen's getName(miShen):", FC_BROWN);
-        std::cout << content << lua_tostring(L, -1) << endl;//-1
+        std::cout << "miShen's getName(miShen):" << lua_tostring(L, -1) << endl;//-1
     }
 
     prefix = setFontColor("cpp端测试用例3:", FC_BLUE);
@@ -207,8 +205,7 @@ void test_metatable(lua_State *L)
     ret = lua_pcall(L, 1, 1, 0);
     if (lua_isstring(L, -1))
     {
-        content = content = setFontColor("miShen's getName(Person):", FC_BROWN);
-        std::cout << content << lua_tostring(L, -1) << endl;
+        std::cout << "miShen's getName(Person):" << lua_tostring(L, -1) << endl;
     }
 }
 

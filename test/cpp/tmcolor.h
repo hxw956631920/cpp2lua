@@ -48,11 +48,11 @@ enum BgColor{
 };
 
 // 设置字体粗细
-string setFontThickness(string str, FontThickness flag);
+string setFontThickness(string str, FontThickness flag = NORMAL);
 
 // 设置字体颜色
-string setFontColor(string str, FontColor flag);
+string setFontColor(string str, FontColor flag = FC_CYAN);
 
 // 设置背景颜色
-string setBgColor(string str, BgColor flag);
+string setBgColor(string str, BgColor flag = BC_BLACK);
 #endif
