@@ -3,25 +3,25 @@
 #include "tmcolor.h"
 
 // 设置字体粗细
-char* setFontAttribute(char *str, FontThickness flag)
+string setFontThickness(string str, FontThickness flag)
 {
-    char *result = new char[strlen(str)+20];
-    sprintf(result, "\033[%dm%s\033[0m", flag, str);
+    string result;
+    result = "\033[" + to_string(flag) + "m" + str + "\033[0m";
     return result;
 }
 
 // 设置字体颜色
-char* setFontAttribute(char *str, FontColor flag)
+string setFontColor(string str, FontColor flag)
 {
-    char *result = new char[strlen(str)+20];
-    sprintf(result, "\033[%dm%s\033[0m", flag, str);
+    string result;
+    result = "\033[" + to_string(flag) + "m" + str + "\033[0m";
     return result;
 }
 
 // 设置背景颜色
-char* setFontAttribute(char *str, BgColor flag)
+string setBgColor(string str, BgColor flag)
 {
-    char *result = new char[strlen(str)+20];
-    sprintf(result, "\033[%dm%s\033[0m", flag, str);
+    string result;
+    result = "\033[" + to_string(flag) + "m" + str + "\033[0m";
     return result;
 }

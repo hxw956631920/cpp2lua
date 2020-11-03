@@ -1,6 +1,6 @@
 
 OBJ = lua_test_c.o lua2cpp.o test_example.o Ref.o lua_ref_binding_module.o lua_ref_binding_oop.o \
-tmcolor.o
+tmcolor.o lua_tmcolor_binding.o
 LIB = liblua.a
 
 
@@ -13,7 +13,7 @@ lua_test_c.o:lua_test_c.cpp test_example.h
 test_example.o:test_example.cpp test_example.h lua2cpp.h
 	g++ -c -g test_example.cpp
 
-lua2cpp.o:lua2cpp.cpp lua2cpp.h 
+lua2cpp.o:lua2cpp.cpp lua2cpp.h
 	g++ -c -g lua2cpp.cpp 
 
 lua_ref_binding_module.o:lua_ref_binding_module.cpp lua_ref_binding_module.h Ref.h luastd.h
@@ -21,6 +21,9 @@ lua_ref_binding_module.o:lua_ref_binding_module.cpp lua_ref_binding_module.h Ref
 
 lua_ref_binding_oop.o:lua_ref_binding_oop.cpp lua_ref_binding_oop.h Ref.h luastd.h
 	g++ -c -g lua_ref_binding_oop.cpp
+
+lua_tmcolor_binding.o:lua_tmcolor_binding.cpp lua_tmcolor_binding.h
+	g++ -c -g lua_tmcolor_binding.cpp
 
 Ref.o:Ref.cpp Ref.h
 	g++ -c -g Ref.cpp

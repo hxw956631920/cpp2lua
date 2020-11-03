@@ -14,9 +14,9 @@
  * 7.
  * **/
 
-
 #include "lua_ref_binding_module.h"
 #include "lua_ref_binding_oop.h"
+#include "lua_tmcolor_binding.h"
 
 #include <iostream>
 using namespace std;
@@ -59,6 +59,7 @@ int lua_openmylib(lua_State *L);
 static const luaL_Reg lua_reg_libs[] = {
     {"base", luaopen_base},
     {"mylib", lua_openmylib},
+    {"FontAttribute", lua_openFontAttributeLib},
     {NULL, NULL}
 };
 

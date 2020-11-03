@@ -15,6 +15,22 @@ extern "C"
 // 自定义头文件
 #include "test_example.h"
 
+static const luaL_Reg customLib[] = {
+    {"FontAttribute", lua_openFontAttributeLib},
+    {NULL, NULL}
+};
+
+void registerCustomLib(lua_State *L)
+{
+    const luaL_Reg *lib = customLib;
+    for (; lib->func; lib++)
+    {
+        luaL_requiref(L, lib->name, lib->func, 1);
+        // 移除该模块
+        lua_pop(L, 1);
+    }
+}
+
 int main(int argc, char **argv)
 {
     if (argc > 1)
@@ -22,6 +38,7 @@ int main(int argc, char **argv)
         // 创建lua栈
         lua_State *L = luaL_newstate();
         luaL_openlibs(L);
+        registerCustomLib(L);
         if (L == NULL)
         {
             return 0;

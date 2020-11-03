@@ -166,8 +166,11 @@ void test_require(lua_State *L)
 // 测试lua中的元表
 void test_metatable(lua_State *L)
 {
+    string prefix, title, content;
     // 获取表-miShen
-    std::cout << "cpp端测试用例1:获取表的元表，并查看该元表name字段的值"<<endl;
+    prefix = setFontColor("cpp端测试用例1:", FC_BLUE);
+    title = setFontColor("获取表的元表，并查看该元表name字段的值", FC_PURPLE);
+    std::cout << prefix+title << endl;
     lua_getglobal(L, "miShen");
     lua_pushstring(L, NULL);
     lua_setfield(L, -2, "name");
@@ -176,10 +179,14 @@ void test_metatable(lua_State *L)
     lua_getfield(L, -1, "name");
     if (lua_isstring(L, -1))
     {
-        std::cout << "miShen's metatable's name:" << lua_tostring(L, -1) << endl;//-2
+        content = setFontColor("miShen's metatable's name:", FC_BROWN);
+        std::cout << content << lua_tostring(L, -1) << endl;//-2
     }
+
     // 更改Person的默认名字
-    std::cout << "cpp端测试用例2:更改元表name字段的值，调用元表的getName但是传的是表的结果"<<endl;
+    prefix = setFontColor("cpp端测试用例2:", FC_BLUE);
+    title = setFontColor("更改元表name字段的值，调用元表的getName但是传的是表的结果", FC_PURPLE);
+    std::cout << prefix+title << endl;
     lua_pushstring(L, "baldwey");
     lua_setfield(L, -3, "name");
     // 调用person的getName函数 但是传的对象是miShen
@@ -188,16 +195,20 @@ void test_metatable(lua_State *L)
     int ret = lua_pcall(L, 1, 1, 0);
     if (lua_isstring(L, -1))
     {
-        std::cout << "miShen's getName(miShen):" << lua_tostring(L, -1) << endl;//-1
+        content = setFontColor("miShen's getName(miShen):", FC_BROWN);
+        std::cout << content << lua_tostring(L, -1) << endl;//-1
     }
 
-    std::cout << "cpp端测试用例3:调用元表的getName传的是元表的结果"<<endl;
+    prefix = setFontColor("cpp端测试用例3:", FC_BLUE);
+    title = setFontColor("调用元表的getName传的是元表的结果", FC_PURPLE);
+    std::cout << prefix+title << endl;
     lua_getfield(L, -3, "getName");
     lua_pushvalue(L, -4);
     ret = lua_pcall(L, 1, 1, 0);
     if (lua_isstring(L, -1))
     {
-        std::cout << "miShen's getName(Person):" << lua_tostring(L, -1) << endl;
+        content = content = setFontColor("miShen's getName(Person):", FC_BROWN);
+        std::cout << content << lua_tostring(L, -1) << endl;
     }
 }
 

@@ -13,17 +13,17 @@
 #ifndef __TERMINALCOLOR_H_
 #define __TERMINALCOLOR_H_
 
-#include <stdio.h>
-#include <string>
+#include <iostream>
 
+using namespace std;
 // 字体粗细
-enum class FontThickness{
+enum FontThickness{
     BOLD            = 1,//粗体
     NORMAL            = 0,//正常
 };
 
 // 字体颜色
-enum class FontColor{
+enum FontColor{
     FC_BLACK        = 30,//黑色
     FC_RED          = 31,//红色
     FC_GREEN        = 32,//绿色
@@ -35,7 +35,7 @@ enum class FontColor{
 };
 
 // 背景颜色
-enum class BgColor{
+enum BgColor{
     BC_BLACK        = 40,//黑色
     BC_RED          = 41,//红色
     BC_GREEN        = 42,//绿色
@@ -48,11 +48,11 @@ enum class BgColor{
 };
 
 // 设置字体粗细
-char* setFontAttribute(char *str, FontThickness flag);
+string setFontThickness(string str, FontThickness flag);
 
 // 设置字体颜色
-char* setFontAttribute(char *str, FontColor flag);
+string setFontColor(string str, FontColor flag);
 
 // 设置背景颜色
-char* setFontAttribute(char *str, BgColor flag);
+string setBgColor(string str, BgColor flag);
 #endif
