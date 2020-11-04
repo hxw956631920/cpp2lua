@@ -20,6 +20,8 @@
 
 #include <iostream>
 using namespace std;
+// 调试用 打印lua栈内容
+void stackDump(lua_State *L);
 
 // 测试lua中的变量
 void test_varriable(lua_State *L);
@@ -35,6 +37,9 @@ void test_metatable(lua_State *L);
 
 // 测试lua调用cpp的变量
 void test_cppVarriable(lua_State *L);
+
+// 元方法
+int elementMethod(lua_State *L);
 
 // 测试lua调用cpp创建的表和为表设置元表
 void test_cppMetatable(lua_State *L);
@@ -59,7 +64,6 @@ int lua_openmylib(lua_State *L);
 static const luaL_Reg lua_reg_libs[] = {
     {"base", luaopen_base},
     {"mylib", lua_openmylib},
-    {"FontAttribute", lua_openFontAttributeLib},
     {NULL, NULL}
 };
 

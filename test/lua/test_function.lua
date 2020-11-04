@@ -40,7 +40,7 @@ function Person:setIsGay(isGay)
 end
 
 function Person:print()
-    print("name", self._name)
+    print("name:", self._name)
     print("age:", self._age)
-    print("isGay", self._isGay)
+    print("isGay:", self._isGay)
 end

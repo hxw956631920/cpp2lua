@@ -4,9 +4,10 @@
 
 int lua_tmcolor_FLAG(lua_State *L)
 {
-    lua_getglobal(L, "FontAttribute");
+    lua_newtable(L);
     lua_pushinteger(L, FC_PURPLE);
     lua_setfield(L, -2, "FC_PURPLE");
+    lua_setglobal(L, "FontAttribute");
     return 0;
 }
 
@@ -137,6 +138,10 @@ int lua_tmcolor_setBgColor(lua_State *L)
 int lua_openFontAttributeLib(lua_State *L)
 {
     luaL_newlib(L, FontAttributeLib);
-    // lua_tmcolor_FLAG(L);
+
+    // luaL_newlib的原型如下
+    luaL_checkversion(L);
+    luaL_newlibtable(L, FontAttributeLib);
+    luaL_setfuncs(L, FontAttributeLib, 0);
     return 1;
 }

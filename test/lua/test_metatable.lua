@@ -5,6 +5,7 @@ local prefix
 local title
 
 local colorFun = FontAttribute.setFontColor
+print(FontAttribute.FC_PURPLE)
 -- 一个新建的表是没有对应的元表的
 t = {}
 

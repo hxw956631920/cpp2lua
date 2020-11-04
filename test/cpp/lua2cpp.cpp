@@ -1,5 +1,29 @@
 
 #include "lua2cpp.h"
+void stackDump(lua_State *L)
+{
+    int i;
+    int top = lua_gettop(L);
+    for (int i = 1; i <= top; i++)
+    {
+        int type = lua_type(L, i);
+        switch (i)
+        {
+        case LUA_TSTRING:
+            cout << lua_typename(L, type) << ":" << lua_tostring(L, i) <<endl;
+            break;
+        case LUA_TBOOLEAN:
+            cout << lua_typename(L, type) << ":" << lua_toboolean(L, i) << endl;
+            break;
+        case LUA_TNUMBER:
+            cout << lua_typename(L, type) << ":" << lua_tonumber(L, i) << endl;
+            break;
+        default:
+            cout << lua_typename(L, type);
+            break;
+        }
+    }
+}
 
 // 测试lua中的基本数据类型
 void test_varriable(lua_State *L)
@@ -8,18 +32,27 @@ void test_varriable(lua_State *L)
     lua_getglobal(L, "name");
     if (lua_isstring(L, -1))
     {
+        string prefix = setFontColor("Cpp端测试用例1:");
+        string title  = setFontColor("c++读取lua字符串", FC_PURPLE);
+        cout << prefix + title << endl;
         std::cout << lua_tostring(L, -1) << endl;   
     }
     // 数字
     lua_getglobal(L, "age");
     if (lua_isnumber(L, -1))
     {
+        string prefix = setFontColor("Cpp端测试用例2:");
+        string title  = setFontColor("c++读取lua数字", FC_PURPLE);
+        cout << prefix + title << endl;
         std::cout << lua_tonumber(L, -1) << endl;   
     }
     // bool
     lua_getglobal(L, "isGay");
     if (lua_isboolean(L, -1))
     {
+        string prefix = setFontColor("Cpp端测试用例3:");
+        string title  = setFontColor("c++读取lua布尔", FC_PURPLE);
+        cout << prefix + title << endl;
         std::cout << lua_toboolean(L, -1) << endl;   
     }
     // 表 写法1
@@ -32,20 +65,23 @@ void test_varriable(lua_State *L)
     lua_gettable(L, -2);
     if (lua_isinteger(L, -1))
     {
-        std::cout << "age:" << lua_tointeger(L, -1) << endl;   
+        string prefix = setFontColor("Cpp端测试用例4:");
+        string title  = setFontColor("c++读取lua表,写法1", FC_PURPLE);
+        cout << prefix + title << endl;
+        std::cout << "person.age:" << lua_tointeger(L, -1) << endl;   
     }
     // 将name压入栈 此时栈数据顺序为  -1:name -2:26 -3:person
     lua_pushstring(L, "name");
     lua_gettable(L, -3);
     if (lua_isstring(L, -1))
     {
-        std::cout << "name:" << lua_tostring(L, -1) << endl;   
+        std::cout << "person.name:" << lua_tostring(L, -1) << endl;   
     }
     lua_pushstring(L, "isGay");
     lua_gettable(L, -4);
     if (lua_isboolean(L, -1))
     {
-        std::cout << "isGay:" << lua_toboolean(L, -1) << endl;   
+        std::cout << "person.isGay:" << lua_toboolean(L, -1) << endl;   
     }
 
     // 表 写法2
@@ -56,6 +92,9 @@ void test_varriable(lua_State *L)
     lua_getfield(L, -4, "age");
     if (lua_isinteger(L, -1))
     {
+        string prefix = setFontColor("Cpp端测试用例4:");
+        string title  = setFontColor("c++读取lua表,写法2", FC_PURPLE);
+        cout << prefix + title << endl;
         std::cout << "age:" << lua_tointeger(L, -1) << endl;  
     }
 }
@@ -65,6 +104,9 @@ void test_function(lua_State *L)
 {
     int ret;
     // 调用lua中定义的全局函数
+    string prefix = setFontColor("Cpp端测试用例1:");
+    string title  = setFontColor("c++读取lua函数", FC_PURPLE);
+    cout << prefix + title << endl;
     lua_getglobal(L, "add");
     lua_pushnumber(L, 10);
     lua_pushnumber(L, 20);
@@ -79,6 +121,9 @@ void test_function(lua_State *L)
     }
     
     // 调用某个表中的函数
+    prefix = setFontColor("Cpp端测试用例2:");
+    title  = setFontColor("c++读取lua表的函数", FC_PURPLE);
+    cout << prefix + title << endl;
     lua_getglobal(L, "Person");
     lua_getfield(L, -1, "getName");
     //c++通过栈调用某个表的函数可以认为是.调用，因为需要把对象传进去，因此这里将Person作为副本压入栈中，作为第一个参数
@@ -86,9 +131,8 @@ void test_function(lua_State *L)
     ret = lua_pcall(L, 1, 1, 0);
     if (lua_isstring(L, -1))
     {
-        std::cout << lua_tostring(L, -1) << endl;
+        std::cout << "Person.getName:" << lua_tostring(L, -1) << endl;
     }
-    
     // 将栈顶的Xiaomi移除
     lua_remove(L, -1);
     // 查找setName函数放置于栈顶
@@ -110,56 +154,57 @@ void test_function(lua_State *L)
 void test_require(lua_State *L)
 {
     int ret;
+    string prefix, title, subTitle;
+    prefix = setFontColor("Cpp端测试用例1:");
+    title  = setFontColor("c++读取lua中require返回的对象:", FC_PURPLE);
+    subTitle = setFontColor("写法1:", FC_BROWN);
+    cout << prefix + title << endl;
+    cout << subTitle << endl;
     // 写法1
     lua_getglobal(L, "lib");
     lua_getfield(L, -1, "_name");
     if (lua_isstring(L, -1))
     {
-        std::cout << lua_tostring(L, -1) << endl;   
+        std::cout << "lib._name:" << lua_tostring(L, -1) << endl;   
     }
 
     lua_getglobal(L, "lib");
     lua_getfield(L, -1, "sex");
     if (lua_isstring(L, -1))
     {
-        std::cout << lua_tostring(L, -1) << endl;   
+        std::cout << "lib.sex:" << lua_tostring(L, -1) << endl;   
     }
     // 写法2
+    subTitle = setFontColor("写法2:", FC_BROWN);
+    cout << subTitle << endl;
     lua_getglobal(L, "lib");
     lua_getfield(L, -1, "_name");
     if (lua_isstring(L, -1))
     {
-        std::cout << lua_tostring(L, -1) << endl;   
+        std::cout << "lib._name:" << lua_tostring(L, -1) << endl;   
     }
 
     lua_getfield(L, -2, "sex");
     if (lua_isstring(L, -1))
     {
-        std::cout << lua_tostring(L, -1) << endl;   
+        std::cout << "lib.sex:" << lua_tostring(L, -1) << endl;   
     }
     // 写法3
+    subTitle = setFontColor("写法2:", FC_BROWN);
+    cout << subTitle << endl;
     lua_getglobal(L, "lib");
     lua_pushstring(L, "_name");
     lua_gettable(L, -2);
     if (lua_isstring(L, -1))
     {
-        std::cout << lua_tostring(L, -1) << endl;   
+        std::cout << "lib._name:" << lua_tostring(L, -1) << endl;   
     }
 
     lua_pushstring(L, "sex");
     lua_gettable(L, -3);
     if (lua_isstring(L, -1))
     {
-        std::cout << lua_tostring(L, -1) << endl;   
-    }
-
-    lua_getglobal(L, "add");
-    lua_pushnumber(L, 100);
-    lua_pushnumber(L, 200);
-    lua_pcall(L, 2, 1, 0);
-    if (lua_isnumber(L, -1))
-    {
-        std::cout << lua_tonumber(L, -1) << endl;   
+        std::cout << "lib.sex:"  << lua_tostring(L, -1) << endl;   
     }
 }
 
@@ -264,12 +309,55 @@ void test_cppVarriable(lua_State *L)
     lua_setglobal(L, "Race");
 }
 
+// 元方法
+int elementMethod(lua_State *L)
+{
+    // int argc = lua_gettop(L);
+    // if (argc == 2)
+    // {
+    //     if (lua_istable(L, -1))
+    //     {
+    //         // lua_getfield(L, -1, "name");
+    //     }
+    // }
+    return 1;
+}
+
 // 测试lua调用cpp创建的表和为表设置元表
 void test_cppMetatable(lua_State *L)
 {
+    // 新建一个表
     lua_newtable(L);
     lua_pushstring(L, "小米");
     lua_setfield(L, -2, "name");
+    lua_pushcfunction(L, pkgAdd);
+    lua_setfield(L, -2, "add");
+
+    // 为该表设置元表
+    lua_newtable(L);
+    lua_pushinteger(L, 25);
+    lua_setfield(L, -2, "age");
+    lua_pushcfunction(L, elementMethod);
+    lua_setfield(L, -2, "__index");
+
+    // setmetatable在api中的原型
+    stackDump(L);
+    int t = lua_type(L, 2);
+    // cout << lua_type(L, 2) << endl;
+    // cout << lua_type(L, 1) << endl;
+    // cout << lua_type(L, 0) << endl;
+    // cout << lua_type(L, 4) << endl;
+    luaL_argcheck(L, t == LUA_TNIL || t == LUA_TTABLE, 2, "nil or table expected");
+    lua_settop(L, 2);
+    lua_setmetatable(L, 1);
+
+    lua_setglobal(L, "miShen");
+}
+
+int add(int a, int b)
+{
+    int c = a + b;
+    return c;
 }
 
 // 测试lua调用cpp的函数
@@ -306,6 +394,12 @@ int lua_openmylib(lua_State *L)
 {
     // 创建新的表将所有函数放在这个表中
     luaL_newlib(L, mylibs_funcs);
+    // 等价于如下写法
+    // luaL_newlibtable(L, mylibs_funcs);
+    // luaL_setfuncs(L, mylibs_funcs, 0);
+    // 也等价于如下写法
+    // lua_createtable(L, 0, sizeof(mylibs_funcs)/sizeof(mylibs_funcs[0]) - 1);
+    // luaL_setfuncs(L, mylibs_funcs, 0);
     return 1;
 }
 

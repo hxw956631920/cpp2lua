@@ -29,6 +29,45 @@ void registerCustomLib(lua_State *L)
         // 移除该模块
         lua_pop(L, 1);
     }
+
+    // luaL_requiref 等价于如下代码
+    // luaL_getsubtable(L, LUA_REGISTRYINDEX, LUA_LOADED_TABLE);
+    // lua_getfield(L, -1, "FontAttribute");  /* LOADED[modname] */
+    // if (!lua_toboolean(L, -1)) {  /* package not already loaded? */
+    //     lua_pop(L, 1);  /* remove field */
+    // /* 
+    //     相当于压入 lua_openFontAttributeLib 函数
+    //     压入其参数 FontAttribute
+    // */
+    //     lua_pushcfunction(L, lua_openFontAttributeLib);
+
+    //     /* 
+    //         lua_pushcfunction 的原型如下
+    //         lua_pushcclosure(L, (f), 0)
+    //         该函数就是闭包函数 因此需要搞懂闭包怎么入栈
+    //     */
+    //     lua_pushstring(L, "FontAttribute");  /* argument to open function */
+    // /*  
+    //     lua_call 也是调用栈中的函数 原型如下
+    //     void lua_call (lua_State *L, int nargs, int nresults);
+    //     nargs表示调用函数参数个数  nresults表示函数返回值个数
+    //     lua_call于lua_pcall十分相似 据网上查资料说 lua_call的运行是无保护的，在
+    //     发生错误时抛出错误而不是返回错误代码 
+    //     考证资料地址:https://blog.csdn.net/fengbangyue/article/details/7342274  
+    // */
+    // /* 
+    //     不太理解的地方 lua_openFontAttributeLib 分明要传的参数是lua_State *L类型
+    //     可是这里却调用的是 string 这就很奇怪
+    // */
+    //     lua_call(L, 1, 1);  /* call 'openf' to open module */
+    //     lua_pushvalue(L, -1);  /* make copy of module (call result) */
+    //     lua_setfield(L, -3, "FontAttribute");  /* LOADED[modname] = module */
+    // }
+    // lua_remove(L, -2);  /* remove LOADED table */
+    // if (glb) {
+    //     lua_pushvalue(L, -1);  /* copy of module */
+    //     lua_setglobal(L, "FontAttribute");  /* _G[modname] = module */
+    // }
 }
 
 int main(int argc, char **argv)
