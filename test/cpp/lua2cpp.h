@@ -20,8 +20,6 @@
 
 #include <iostream>
 using namespace std;
-// 调试用 打印lua栈内容
-void stackDump(lua_State *L);
 
 // 测试lua中的变量
 void test_varriable(lua_State *L);

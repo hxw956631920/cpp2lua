@@ -6,6 +6,8 @@
 
 // 引入lua标准头文件库
 #include "luastd.h"
+// 引入调试工具
+#include "debugTool.h"
 #include "Ref.h"
 
 // 创建ref对象

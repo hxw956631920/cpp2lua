@@ -58,7 +58,6 @@ void registerCustomLib(lua_State *L)
     //     /* 
     //         lua_pushcfunction 的原型如下
     //         lua_pushcclosure(L, (f), 0)
-    //         该函数就是闭包函数 因此需要搞懂闭包怎么入栈
     //     */
     //     lua_pushstring(L, "FontAttribute");  /* argument to open function */
     // /*  

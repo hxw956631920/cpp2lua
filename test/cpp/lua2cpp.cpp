@@ -1,31 +1,5 @@
 
 #include "lua2cpp.h"
-void stackDump(lua_State *L)
-{
-    int i;
-    int top = lua_gettop(L);
-    cout << "top num:" << top << endl;
-    for (int i = 1; i <= top; i++)
-    {
-        int type = lua_type(L, i);
-        switch (type)
-        {
-        case LUA_TSTRING:
-            cout << lua_typename(L, type) << ":" << lua_tostring(L, i) <<endl;
-            break;
-        case LUA_TBOOLEAN:
-            cout << lua_typename(L, type) << ":" << lua_toboolean(L, i) << endl;
-            break;
-        case LUA_TNUMBER:
-            cout << lua_typename(L, type) << ":" << lua_tonumber(L, i) << endl;
-            break;
-        default:
-            cout << lua_typename(L, type) << endl;
-            break;
-        }
-    }
-}
-
 // 测试lua中的基本数据类型
 void test_varriable(lua_State *L)
 {
@@ -362,7 +336,7 @@ void test_cppMetatable(lua_State *L)
     int t = lua_type(L, 2);
     luaL_argcheck(L, t == LUA_TNIL || t == LUA_TTABLE, 2, "nil or table expected");
     lua_settop(L, 2);
-    // lua_setmetatable 将栈顶和-2位置的两个table弹出， 将栈顶的table设置为-2位置的table的元表
+    // lua_setmetatable 将栈顶table弹出， 设置为-2位置的table的元表
     lua_setmetatable(L, 1);
     lua_setglobal(L, "miShen");
 }
@@ -429,8 +403,8 @@ int lua_openmylib(lua_State *L)
     lua_pop(L, nup);  
 */
     // 实际上没必要这样写
-    // 某个模块的库函数 我们一般而言是没有upvalue的 因此没必要这么麻烦 直接这样写就好了
-    // lua_createtable()
+    // 某个模块的库函数 我们一般而言是没有upvalue的 因此没必要这么麻烦 直接创建一个表并且压入一个函数
+    // 再对这个表设置该函数的索引就好了
     return 1;
 }
 

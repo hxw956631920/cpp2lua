@@ -5,7 +5,9 @@
 // 创建ref对象
 int lua_ref_create_module(lua_State *L)
 {
+    // 分配一块大小为 sizeof(Ref *) 的内存块放置于栈顶
     Ref **obj = (Ref **)lua_newuserdata(L, sizeof(Ref *));
+    // 让内存块指向一个Ref对象
     *obj = new Ref();
     return 1;
 }
