@@ -4,10 +4,11 @@ void stackDump(lua_State *L)
 {
     int i;
     int top = lua_gettop(L);
+    cout << "top num:" << top << endl;
     for (int i = 1; i <= top; i++)
     {
         int type = lua_type(L, i);
-        switch (i)
+        switch (type)
         {
         case LUA_TSTRING:
             cout << lua_typename(L, type) << ":" << lua_tostring(L, i) <<endl;
@@ -19,7 +20,7 @@ void stackDump(lua_State *L)
             cout << lua_typename(L, type) << ":" << lua_tonumber(L, i) << endl;
             break;
         default:
-            cout << lua_typename(L, type);
+            cout << lua_typename(L, type) << endl;
             break;
         }
     }
@@ -309,17 +310,26 @@ void test_cppVarriable(lua_State *L)
     lua_setglobal(L, "Race");
 }
 
-// 元方法
-int elementMethod(lua_State *L)
+// __index元方法
+int indexMethod(lua_State *L)
 {
-    // int argc = lua_gettop(L);
-    // if (argc == 2)
-    // {
-    //     if (lua_istable(L, -1))
-    //     {
-    //         // lua_getfield(L, -1, "name");
-    //     }
-    // }
+    int argc = lua_gettop(L);
+    if (argc == 2)
+    {
+        if (lua_istable(L, -2))
+        {
+            // 获取到目标表的元表
+            lua_getmetatable(L, -2);
+            // 查询元表key对应的value
+            lua_getfield(L, -1, lua_tostring(L, -2));
+        }
+    }
+    return 1;
+}
+
+// __newIndex元方法
+int newindexMethod(lua_State *L)
+{
     return 1;
 }
 
@@ -337,20 +347,22 @@ void test_cppMetatable(lua_State *L)
     lua_newtable(L);
     lua_pushinteger(L, 25);
     lua_setfield(L, -2, "age");
-    lua_pushcfunction(L, elementMethod);
+    // 设置__index字段
+    // 第一种是对__index赋值一个方法 该方法将表的元表key对应的value返回
+    lua_pushcfunction(L, indexMethod);
+    // 第二种是直接对__index赋值一个表 将访问这个表key对应的value
+    // lua_pushvalue(L, -1);
     lua_setfield(L, -2, "__index");
+    // 设置__newindex字段
+    lua_pushcfunction(L, newindexMethod);
+    lua_setfield(L, -2, "__newindex");
 
-    // setmetatable在api中的原型
-    stackDump(L);
+    // setmetatable在api中的原型;
     int t = lua_type(L, 2);
-    // cout << lua_type(L, 2) << endl;
-    // cout << lua_type(L, 1) << endl;
-    // cout << lua_type(L, 0) << endl;
-    // cout << lua_type(L, 4) << endl;
     luaL_argcheck(L, t == LUA_TNIL || t == LUA_TTABLE, 2, "nil or table expected");
     lua_settop(L, 2);
+    // lua_setmetatable 将栈顶和-2位置的两个table弹出， 将栈顶的table设置为-2位置的table的元表
     lua_setmetatable(L, 1);
-
     lua_setglobal(L, "miShen");
 }
 

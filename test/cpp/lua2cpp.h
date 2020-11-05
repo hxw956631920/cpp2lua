@@ -38,8 +38,11 @@ void test_metatable(lua_State *L);
 // 测试lua调用cpp的变量
 void test_cppVarriable(lua_State *L);
 
-// 元方法
-int elementMethod(lua_State *L);
+// __index元方法
+int indexMethod(lua_State *L);
+
+// __newIndex元方法
+int newindexMethod(lua_State *L);
 
 // 测试lua调用cpp创建的表和为表设置元表
 void test_cppMetatable(lua_State *L);
