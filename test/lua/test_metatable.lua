@@ -5,12 +5,11 @@ local prefix
 local title
 
 local colorFun = FontAttribute.setFontColor
-print(FontAttribute.FC_PURPLE)
 -- 一个新建的表是没有对应的元表的
 t = {}
 
 prefix = colorFun("Lua测试用例1:")
-title = colorFun("测试一个新建的表的元表是否为空:", 33)
+title = colorFun("测试一个新建的表的元表是否为空:", FontAttribute.FC_PURPLE)
 print(prefix..title)
 print(getmetatable((t)))
 
@@ -76,7 +75,7 @@ local set = Set.new({1, 2, 3})
 -- 测试拥有共同元表
 local set1 = Set.new({"小米", "米神", "流米", 2})
 prefix = colorFun("Lua测试用例2:")
-title = colorFun("测试两个表拥有的共同元表是否相同", 33)
+title = colorFun("测试两个表拥有的共同元表是否相同", FontAttribute.FC_PURPLE)
 print(prefix..title)
 print(getmetatable(set))
 print(getmetatable(set1))
@@ -88,7 +87,7 @@ mt.__concat = Set.concat
 mt.__tostring = Set.tostring
 
 prefix = colorFun("Lua测试用例3:")
-title = colorFun("测试lua端设置元方法", 33)
+title = colorFun("测试lua端设置元方法", FontAttribute.FC_PURPLE)
 print(prefix..title)
 print(set+set1)
 print(set*set1)
@@ -122,7 +121,7 @@ setmetatable(miShen, Person)
 -- -- ====走元方法===
 -- -- 小米
 prefix = colorFun("Lua测试用例4:")
-title = colorFun("测试访问表没有的字段是否走元表__index方法", 33)
+title = colorFun("测试访问表没有的字段是否走元表__index方法", FontAttribute.FC_PURPLE)
 print(prefix..title)
 print(miShen.name)
 
@@ -138,7 +137,7 @@ print(miShen:getName())
 
 -- 此时设置完了该字段因此不会触发元方法
 prefix = colorFun("Lua测试用例5:")
-title = colorFun("测试设置了该表的字段后再去访问是否还走元表的__index方法", 33)
+title = colorFun("测试设置了该表的字段后再去访问是否还走元表的__index方法", FontAttribute.FC_PURPLE)
 print(prefix..title)
 miShen.name = "米神"
 print(miShen.name)
@@ -146,7 +145,7 @@ print(miShen.name)
 -- 测试rawget函数
 -- 结果显示直接打印为空 说明没有走元表
 prefix = colorFun("Lua测试用例6:")
-title = colorFun("测试rawget函数", 33)
+title = colorFun("测试rawget函数", FontAttribute.FC_PURPLE)
 print(prefix..title)
 miShen.name = nil
 print(rawget(miShen, "name"))
@@ -161,14 +160,14 @@ Person.__newindex = function (t, key)
     print("====走__newindex元方法===")
 end
 prefix = colorFun("Lua测试用例7:")
-title = colorFun("测试__newindex方法:", 33)
+title = colorFun("测试__newindex方法:", FontAttribute.FC_PURPLE)
 print(prefix..title)
 miShen.name = "米神"
 print(miShen.name)
 
 -- 测试rawset
 prefix = colorFun("Lua测试用例8:")
-title = colorFun("测试rawset:", 33)
+title = colorFun("测试rawset:", FontAttribute.FC_PURPLE)
 print(prefix..title)
 miShen.name = nil
 rawset(miShen, "name", "米神")

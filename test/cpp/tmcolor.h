@@ -44,8 +44,19 @@ enum BgColor{
     BC_PURPLE       = 45,//紫色
     BC_CYAN         = 46,//青色
     BC_WHITE        = 47,//白色
-    DEFAULT         = 49,//缺省黑色背景
+    BC_DEFAULT         = 49,//缺省黑色背景
 };
+
+// 枚举映射表
+typedef struct enumMapping{
+    int value;
+    string name;
+}enumMapping;
+
+extern enumMapping tmcolorMap[];
+
+// 根据枚举值获取枚举名
+string getEnumName(int flag);
 
 // 设置字体粗细
 string setFontThickness(string str, FontThickness flag = NORMAL);

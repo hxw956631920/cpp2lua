@@ -20,16 +20,30 @@ static const luaL_Reg customLib[] = {
     {NULL, NULL}
 };
 
+static const luaL_Reg customConst[] = {
+    {"FontAttribute", lua_tmcolor_FLAG},
+    {NULL, NULL}
+};
+
 void registerCustomLib(lua_State *L)
 {
     const luaL_Reg *lib = customLib;
+    // 注册模块的函数
     for (; lib->func; lib++)
     {
         luaL_requiref(L, lib->name, lib->func, 1);
         // 移除该模块
         lua_pop(L, 1);
     }
-
+    // 注册模块对应的常量
+    lib = customConst;
+    for (; lib->func; lib++)
+    {
+        lib->func(L);
+        // 移除该模块
+        lua_pop(L, 1);
+    }
+    
     // luaL_requiref 等价于如下代码
     // luaL_getsubtable(L, LUA_REGISTRYINDEX, LUA_LOADED_TABLE);
     // lua_getfield(L, -1, "FontAttribute");  /* LOADED[modname] */

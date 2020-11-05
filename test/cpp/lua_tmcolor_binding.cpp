@@ -4,10 +4,24 @@
 
 int lua_tmcolor_FLAG(lua_State *L)
 {
-    lua_newtable(L);
-    lua_pushinteger(L, FC_PURPLE);
-    lua_setfield(L, -2, "FC_PURPLE");
-    lua_setglobal(L, "FontAttribute");
+    lua_getglobal(L, "FontAttribute");
+    for (int value = NORMAL; value < BOLD; value++)
+    {
+        lua_pushinteger(L, value);
+        lua_setfield(L, -2, getEnumName(value).c_str());
+    }
+    
+    for (int value = FC_BLACK; value <= FC_WHITE; value++)
+    {
+        lua_pushinteger(L, value);
+        lua_setfield(L, -2, getEnumName(value).c_str());
+    }
+
+    for (int value = BC_BLACK; value <= BC_DEFAULT; value++)
+    {
+        lua_pushinteger(L, value);
+        lua_setfield(L, -2, getEnumName(value).c_str());
+    }
     return 0;
 }
 

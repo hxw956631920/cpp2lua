@@ -340,6 +340,7 @@ void test_cppMetatable(lua_State *L)
     lua_newtable(L);
     lua_pushstring(L, "小米");
     lua_setfield(L, -2, "name");
+    // 为表设置一个函数
     lua_pushcfunction(L, pkgAdd);
     lua_setfield(L, -2, "add");
 
@@ -409,9 +410,27 @@ int lua_openmylib(lua_State *L)
     // 等价于如下写法
     // luaL_newlibtable(L, mylibs_funcs);
     // luaL_setfuncs(L, mylibs_funcs, 0);
+
     // 也等价于如下写法
     // lua_createtable(L, 0, sizeof(mylibs_funcs)/sizeof(mylibs_funcs[0]) - 1);
     // luaL_setfuncs(L, mylibs_funcs, 0);
+
+    // luaL_setfuncs的原型如下
+/*   
+    luaL_checkstack(L, nup, "too many upvalues");
+    for (; l->name != NULL; l++) {  
+        int i;
+        for (i = 0; i < nup; i++)  
+        // 这里的lua_pushvalue实际上是设置函数所在环境的upvalue 
+        lua_pushvalue(L, -nup);
+        lua_pushcclosure(L, l->func, nup);  
+        lua_setfield(L, -(nup + 2), l->name);
+    }
+    lua_pop(L, nup);  
+*/
+    // 实际上没必要这样写
+    // 某个模块的库函数 我们一般而言是没有upvalue的 因此没必要这么麻烦 直接这样写就好了
+    // lua_createtable()
     return 1;
 }
 
