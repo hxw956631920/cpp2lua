@@ -438,3 +438,13 @@ void test_cppClassOOP(lua_State *L)
     lua_baseClass_open_oop(L);
 }
 
+// 测试cpp类继承
+void test_cppInheritance(lua_State *L)
+{
+    // 基础lua库
+    luaL_openlibs(L);
+    // ref注册
+    lua_baseClass_open_oop(L);
+    // node类注册
+    lua_Node_open(L);
+}

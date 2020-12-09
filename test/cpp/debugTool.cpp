@@ -28,3 +28,9 @@ void stackDump(lua_State *L)
         }
     }
 }
+
+// lua端调试用 打印dump内容
+void luaDump(lua_State *L)
+{
+    
+}

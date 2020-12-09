@@ -18,8 +18,9 @@ int lua_ref_create_oop(lua_State *L)
 int lua_ref_retain_oop(lua_State *L)
 {
     // 从栈底返回对象
-    Ref **obj = (Ref **)luaL_checkudata(L, 1, "RefClass");
-    luaL_argcheck(L, obj != NULL, 1, "invalid user data");
+    // Ref **obj = (Ref **)luaL_checkudata(L, 1, "RefClass");
+    // luaL_argcheck(L, obj != NULL, 1, "invalid user data");
+    Ref **obj = (Ref **)lua_touserdata(L, -1);
     int argc = lua_gettop(L) - 1;
     if (argc == 0)
     {
@@ -36,8 +37,9 @@ int lua_ref_retain_oop(lua_State *L)
 int lua_ref_release_oop(lua_State *L)
 {
     // 从栈底返回对象
-    Ref **obj = (Ref **)luaL_checkudata(L, 1, "RefClass");
-    luaL_argcheck(L, obj != NULL, 1, "invalid user data");
+    // Ref **obj = (Ref **)luaL_checkudata(L, 1, "RefClass");
+    // luaL_argcheck(L, obj != NULL, 1, "invalid user data");
+    Ref **obj = (Ref **)lua_touserdata(L, -1);
     int argc = lua_gettop(L) - 1;
     if (argc == 0)
     {
@@ -54,8 +56,9 @@ int lua_ref_release_oop(lua_State *L)
 int lua_ref_getRefCount_oop(lua_State *L)
 {
     // 从栈底返回对象
-    Ref **obj = (Ref **)luaL_checkudata(L, 1, "RefClass");
-    luaL_argcheck(L, obj != NULL, 1, "invalid user data");
+    // Ref **obj = (Ref **)luaL_checkudata(L, 1, "RefClass");
+    // luaL_argcheck(L, obj != NULL, 1, "invalid user data");
+    Ref **obj = (Ref **)lua_touserdata(L, -1);
     int argc = lua_gettop(L) - 1;
     if (argc == 0)
     {

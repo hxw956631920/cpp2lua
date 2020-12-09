@@ -9,4 +9,6 @@ using namespace std;
 // 调试用 打印lua栈内容
 void stackDump(lua_State *L);
 
+// lua端调试用 打印dump内容
+void luaDump(lua_State *L);
 #endif

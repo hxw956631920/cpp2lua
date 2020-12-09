@@ -16,6 +16,7 @@
 
 #include "lua_ref_binding_module.h"
 #include "lua_ref_binding_oop.h"
+#include "lua_node_binding.h"
 #include "lua_tmcolor_binding.h"
 
 #include <iostream>
@@ -76,5 +77,8 @@ void test_cppClassModule(lua_State *L);
 
 // 测试cpp类以面向对象形式注册
 void test_cppClassOOP(lua_State *L);
+
+// 测试cpp类继承
+void test_cppInheritance(lua_State *L);
 
 #endif
